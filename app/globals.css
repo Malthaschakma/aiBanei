@@ -1,0 +1,207 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Matches both the element carrying `.dark` and its descendants, so a single
+   section can be flipped to the dark palette without wrapping it. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ---------------------------------------------------------------------------
+   Aibanei palette
+
+   Authored as OKLCH converted from the brand hex values. Two deliberate
+   departures from the raw brand list, both for WCAG 2.2 AA compliance:
+
+   - Secondary text on dark is #8A9095 (6.03:1) rather than #6B7075 (3.83:1),
+     which fails AA for body copy against #0B0D0F.
+   - The accent is only ever a background. It pairs with near-black foreground
+     (14.77:1) and is never used as text on a light surface.
+--------------------------------------------------------------------------- */
+
+:root {
+  /* Light — the default for application surfaces */
+  --background: oklch(97.5% 0.0053 106.5); /* #F7F7F3 */
+  --surface: oklch(100% 0 89.88); /* #FFFFFF */
+  --surface-sunken: oklch(94.47% 0.0067 106.53); /* #EDEDE8 */
+  --foreground: oklch(18.54% 0.0052 248.11); /* #111315 */
+  --muted-foreground: oklch(54.25% 0.0099 248.01); /* #6B7075 */
+  --border: oklch(91.11% 0.0081 106.56); /* #E2E2DC */
+  --border-strong: oklch(84% 0.009 106.5);
+  --ring: oklch(18.54% 0.0052 248.11);
+
+  --accent: oklch(89.28% 0.2016 127.19); /* #B7F34A */
+  --accent-foreground: oklch(15.77% 0.0054 248.17); /* #0B0D0F */
+  --accent-subtle: oklch(96% 0.06 127.19);
+
+  --success: oklch(52.34% 0.1347 144.17);
+  --success-subtle: oklch(95% 0.035 144.17);
+  --warning: oklch(59.09% 0.1325 65.12);
+  --warning-subtle: oklch(95.5% 0.035 65.12);
+  --danger: oklch(54.33% 0.174 29.7);
+  --danger-subtle: oklch(95.5% 0.032 29.7);
+  --info: oklch(53.26% 0.1369 250.56);
+  --info-subtle: oklch(95.5% 0.03 250.56);
+
+  /* Inverted pair — for dark callouts inside a light page */
+  --inverse: oklch(15.77% 0.0054 248.17);
+  --inverse-foreground: oklch(97.5% 0.0053 106.5);
+}
+
+.dark {
+  --background: oklch(15.77% 0.0054 248.17); /* #0B0D0F */
+  --surface: oklch(18.98% 0.0094 255.63); /* #111418 */
+  --surface-sunken: oklch(13% 0.005 248.17);
+  --foreground: oklch(97.5% 0.0053 106.5); /* #F7F7F3 */
+  --muted-foreground: oklch(65% 0.0102 242.92); /* #8A9095 */
+  --border: oklch(28.26% 0.0132 253.03); /* #252A30 */
+  --border-strong: oklch(36% 0.014 253);
+  --ring: oklch(89.28% 0.2016 127.19);
+
+  --accent: oklch(89.28% 0.2016 127.19);
+  --accent-foreground: oklch(15.77% 0.0054 248.17);
+  --accent-subtle: oklch(26% 0.055 127.19);
+
+  --success: oklch(80% 0.14 148);
+  --success-subtle: oklch(26% 0.05 148);
+  --warning: oklch(80% 0.12 72);
+  --warning-subtle: oklch(27% 0.05 72);
+  --danger: oklch(72% 0.15 25);
+  --danger-subtle: oklch(27% 0.06 25);
+  --info: oklch(76% 0.11 245);
+  --info-subtle: oklch(27% 0.05 245);
+
+  --inverse: oklch(97.5% 0.0053 106.5);
+  --inverse-foreground: oklch(15.77% 0.0054 248.17);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ring: var(--ring);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent-subtle: var(--accent-subtle);
+
+  --color-success: var(--success);
+  --color-success-subtle: var(--success-subtle);
+  --color-warning: var(--warning);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-danger: var(--danger);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-info: var(--info);
+  --color-info-subtle: var(--info-subtle);
+
+  --color-inverse: var(--inverse);
+  --color-inverse-foreground: var(--inverse-foreground);
+
+  --font-display: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  /* Radii per the design system: 8 / 12 / 20 */
+  --radius-sm: 6px;
+  --radius: 8px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+
+  /* Editorial display scale. Body sizes stay on the Tailwind defaults. */
+  --text-display-xs: 1.5rem;
+  --text-display-xs--line-height: 1.2;
+  --text-display-xs--letter-spacing: -0.018em;
+  --text-display-sm: 2rem;
+  --text-display-sm--line-height: 1.14;
+  --text-display-sm--letter-spacing: -0.022em;
+  --text-display-md: 2.75rem;
+  --text-display-md--line-height: 1.08;
+  --text-display-md--letter-spacing: -0.026em;
+  --text-display-lg: 3.75rem;
+  --text-display-lg--line-height: 1.02;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-display-xl: 5rem;
+  --text-display-xl--line-height: 0.98;
+  --text-display-xl--letter-spacing: -0.034em;
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings:
+      "cv02" 1,
+      "cv03" 1,
+      "cv04" 1;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* One consistent focus treatment across every interactive element. */
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  ::selection {
+    background-color: var(--accent);
+    color: var(--accent-foreground);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer utilities {
+  /* Financial figures, scores and percentages align in columns. */
+  .tabular {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .text-pretty {
+    text-wrap: pretty;
+  }
+
+  /* Section eyebrow: small, tracked-out, uppercase. */
+  .eyebrow {
+    font-family: var(--font-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+}
